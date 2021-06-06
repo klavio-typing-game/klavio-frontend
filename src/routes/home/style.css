@@ -22,23 +22,24 @@ input {
 }
 
 .active {
-	background: #4fb385;
-    color: white;
-    font-weight: bold;
-    padding: 5px;
+	/* background: #4fb385; */
+    color: #4fb385;
+    /* font-weight: bold; */
+    /* padding: 5px; */
 }
 
 .current {
-	position: relative;
-    background: #3d216d;
-    padding: 10px;
+    position: relative;
+    color: #4fb385;
+    /* background: #3d216d; */
+    /* padding: 10px; */
     border-radius: 3px;
-    /* font-weight: bold; */
-    color: white;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
-.current::before {
-	content: "current word";
+/* .current::before {
+    content: "current word";
     padding: 5px 10px;
     width: 100px;
     color: white;
@@ -49,19 +50,45 @@ input {
     top: -30px;
     left: 100%;
     border-radius: 5px 5px 5px 0px;
-}
+} */
 
 .visible {
-	visibility: visible;
+    visibility: visible;
 }
 
 .hidden {
-	visibility: hidden;
+    visibility: hidden;
+}
+
+.textBox {
+    border-style: solid;
+    /* border-bottom: black; */
+    /* background-color: black; */
+    background-color: #f6fbff;
+    border-radius: 0.5pc;
+    margin-left: 25vmin;
+    margin-right: 25vmin;
+    padding-left: 3vmin;
+    padding-right: 4vmin;
+    /* padding: 3vmin; */
 }
 
 .targetText {
-	text-align: center;
-    margin-top: 40px;
-    padding: 20px 25px;
+	text-align: left;
+    /* margin-top: 40px; */
+    /* padding: 20px 25px; */
     font-size: 20px;
+    font-weight: bold;
+}
+
+#startButton {
+    font-size: 30px;
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
+.countDown {
+    font-size: 25px;
+    font-weight: bold;
 }
