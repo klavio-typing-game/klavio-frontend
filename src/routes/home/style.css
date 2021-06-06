@@ -30,7 +30,7 @@ input {
 
 .current {
     position: relative;
-    color: #4fb385;
+    /* color: #4fb385; */
     /* background: #3d216d; */
     /* padding: 10px; */
     border-radius: 3px;
@@ -86,6 +86,15 @@ input {
     width: 20%;
     margin-left: 40%;
     margin-right: 40%;
+}
+
+.inputField {
+    font-size: 20px;
+}
+.inputFieldMistake {
+    background-color: #d08383;
+    font-size: 20px;
+
 }
 
 .countDown {

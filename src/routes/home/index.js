@@ -1,3 +1,4 @@
+import 'preact/devtools'
 // import { h } from 'preact';
 // import style from './style.css';
 
@@ -9,7 +10,6 @@
 // );
 
 // export default Home;
-
 
 import { Component, createRef, h } from 'preact';
 import style from './style.css';
@@ -31,14 +31,9 @@ class Countdown extends Component {
 			}
 		}, 1000);
 	}
-	
-	componentWillUnmount() {
-	  clearInterval(this.timer);
-	}
   
 	render() {
-	  let time = this.state.time;
-	  return <div >{time}</div>;
+	  return <div >{this.state.time}</div>;
 	}
   }
 
@@ -65,6 +60,7 @@ class Home extends Component {
 			success: false,
 			maxAttempts: 3,
 			currentAttempt: 0,
+			mistake: false,
 			userCoundown: 3,
 		}
 		
@@ -163,18 +159,18 @@ class Home extends Component {
 			return(
 				<button onClick={() => {this.setState({...this.initialState, gameStarted:true})}}>Start competition</button>
 				)
-			}else if(this.state.gameStarted == true && this.state.countDown > 0) {
-				return(
-					<div class={style.countDown}>
-						<Countdown time={this.state.userCoundown} setCountDown={this.getChildCountDown.bind(this)} />
-					</div>
-			)
+		}else if(this.state.gameStarted == true && this.state.countDown > 0) {
+			return(
+				<div class={style.countDown}>
+					<Countdown time={this.state.userCoundown} setCountDown={this.getChildCountDown.bind(this)} />
+				</div>
+				)
 		}
 		return(
 			<div>
-				<input  id="inputField" onFocus={this.handleChange.bind(this)} onKeyUp={this.handleKeyUp.bind(this)} value={this.state.inputValue} ref={this.ref} />
+				<input  class={ this.state.mistake ? style.inputFieldMistake : style.inputField} id="inputField" onFocus={this.handleChange.bind(this)} onKeyUp={this.handleKeyUp.bind(this)} value={this.state.inputValue} ref={this.ref} />
 			</div>
-		)
+			)
 		
 	}
 
