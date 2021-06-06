@@ -55,6 +55,7 @@ class Home extends Component {
 			startDate: null,
 			words: this.inputText.split(" "),
 			wordIndex: -1,
+			charIndex: -1,
 			inputValue: "",
 			finished: false,
 			success: false,
@@ -88,9 +89,25 @@ class Home extends Component {
 	}
 	
 	handleKeyUp(evt) {
+		console.log(evt.keyCode)
+		if(evt.keyCode == 17){
+			this.setState({
+				...this.state,
+				charIndex: - 1,
+				inputValue: ""
+			})
+			return
+		}
+		const value = evt.target.value
+		if (!value.trim()) return
+		console.log(value)
+		this.setState({
+			...this.state,
+			charIndex:value.length - 1,
+			inputValue: value
+		})
 		if (evt.keyCode == 32) {
-			const value = evt.target.value
-			if (!value.trim()) return
+			// if (!value.trim()) return
 			if (value.trimRight() === this.state.words[this.state.wordIndex]) {
 				const nextState = this.state.wordIndex + 1
 				
@@ -111,6 +128,7 @@ class Home extends Component {
 					...this.state,
 					wordIndex: nextState,
 					inputValue: "",
+					charIndex: -1,
 				})
 			} else {
 				const nextAttempt = this.state.currentAttempt + 1
@@ -128,6 +146,11 @@ class Home extends Component {
 				})
 			}
 		}
+
+		// this.setState({
+		// 	...this.state,
+		// 	charIndex: value.length
+		// })
 	}
 	
 	handleChange() {
@@ -180,11 +203,16 @@ class Home extends Component {
 				<h1>Klavio</h1>
 				<span>Bro, you have attempts {this.state.maxAttempts - this.state.currentAttempt}</span>
 				<div class={style.textBox}>
-				<p class={style.targetText}>{this.state.words.map((word, id) => (
-					<span key={id} class={id < this.state.wordIndex && this.state.wordIndex != -1 ? style.active : id == this.state.wordIndex ? style.current : null}>{word} </span> 
+				<div class={style.unselectable}>
+				<p class={style.targetText}>{this.state.words.map((word, word_id) => (
+					<span key={word_id}  	class={word_id < this.state.wordIndex && this.state.wordIndex != -1 ? 
+					style.typed : word_id == this.state.wordIndex ? style.underline : null}       >{word.split('').map((ch, ch_id) => (
+						<span  key={ch_id} class={ch_id < this.state.charIndex && this.state.charIndex != -1 && this.state.wordIndex == word_id ?
+						style.current : ch_id == this.state.charIndex && this.state.wordIndex == word_id ? style.current : null}>{ch}</span>
+					))} </span> 
 				))}</p>
 				</div>
-
+				</div>
 				{this.showInput(this.state.userCoundown)}
 
 				<div class={this.state.finished ? style.visible : style.hidden}>

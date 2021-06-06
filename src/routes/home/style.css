@@ -21,21 +21,43 @@ input {
 	font-size: 20px;
 }
 
-.active {
-	/* background: #4fb385; */
-    color: #4fb385;
+.mask {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .unselectable {
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;
+  }
+  
+
+.typed {
+	color: #4fb385;
+    /* color: #4fb385; */
     /* font-weight: bold; */
     /* padding: 5px; */
 }
-
+.underline {
+    text-decoration: underline;
+}
 .current {
     position: relative;
-    /* color: #4fb385; */
+    color: #4fb385;
     /* background: #3d216d; */
     /* padding: 10px; */
-    border-radius: 3px;
-    font-weight: bold;
+    /* border-radius: 3px; */
+    /* font-weight: bold; */
     text-decoration: underline;
+}
+.currentWrong {
+    background-color: #d08383;
 }
 
 /* .current::before {
