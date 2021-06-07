@@ -1,19 +1,6 @@
 import 'preact/devtools'
-// import { h } from 'preact';
-// import style from './style.css';
-
-// const Home = () => (
-// 	<div class={style.home}>
-// 		<h1>Home</h1>
-// 		<p>This is the Home component.</p>
-// 	</div>
-// );
-
-// export default Home;
-
 import { Component, createRef, h } from 'preact';
 import style from './style.css';
-// import {useState, useEffect} from 'preact/hooks'
 
 
 class Countdown extends Component {
@@ -41,8 +28,8 @@ class Home extends Component {
 	constructor() {
 		super();
 		const inputs = [
-			// "Listen, Morty, I hate to break it to you but what people call \"love\" is just a chemical reaction that compels animals to breed. It hits hard, Morty, then it slowly fades, leaving you stranded in a failing marriage. I did it. Your parents are gonna do it. Break the cycle, Morty. Rise above. Focus on science"
-			"Привіт, як твої справи?",
+			"Listen, Morty, I hate to break it to you but what people call \"love\" is just a chemical reaction that compels animals to breed. It hits hard, Morty, then it slowly fades, leaving you stranded in a failing marriage. I did it. Your parents are gonna do it. Break the cycle, Morty. Rise above. Focus on science"
+			// "Привіт, як твої справи?",
 			// "Type this text so fast, as you can!",
 			// "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
 		]
@@ -59,8 +46,6 @@ class Home extends Component {
 			inputValue: "",
 			finished: false,
 			success: false,
-			maxAttempts: 3,
-			currentAttempt: 0,
 			mistake: false,
 			userCoundown: 3,
 			mistakesMade: 0,
@@ -90,18 +75,9 @@ class Home extends Component {
 	}
 	
 	handleKeyUp(evt) {
-		console.log("-------\nKey code:",evt.keyCode)
-		// if(evt.keyCode == 17){
-		// 	this.setState({
-		// 		...this.state,
-		// 		mistake: false,
-		// 		charIndex: - 1,
-		// 		inputValue: ""
-		// 	})
-		// 	return
-		// }
 		const value = evt.target.value
 		const chI = value.length - 1
+
 		if (!value.trim()) {
 			this.setState({
 				...this.state,
@@ -111,10 +87,7 @@ class Home extends Component {
 			})
 			return
 		}
-		console.log("Got",value+"_")
-		console.log(this.state.wordIndex)
-		console.log(chI + 1)
-		console.log("Must be",this.state.words[this.state.wordIndex].substring(0, chI+1))
+
 		if (this.state.words[this.state.wordIndex].substring(0, chI+1) !== value.trimRight()) {
 			if (this.state.mistake == true){
 				this.setState({
@@ -140,15 +113,13 @@ class Home extends Component {
 				inputValue: value
 			})
 		}
+
 		if (evt.keyCode == 32) {
-			console.log("Check for 32 code",value+"_")
-			// if (!value.trim()) return
 			if (value.trimRight() === this.state.words[this.state.wordIndex]) {
 				const nextState = this.state.wordIndex + 1
 				
 				if (nextState >= this.state.words.length) {
 					const stats = this.getWordsPerMin()
-					
 					return this.setState({
 						...this.state,
 						finished: true,
@@ -168,31 +139,20 @@ class Home extends Component {
 				})
 				return
 			} 
-				// const nextAttempt = this.state.currentAttempt + 1
-				// console.log('failed attempt', nextAttempt)
-				// if (nextAttempt >= this.state.maxAttempts) {
-				// 	return this.setState({
-				// 		...this.state,
-				// 		finished: true,
-				// 	})
-				// }
 				
-				if(!this.state.mistake){
-					this.setState({
-					...this.state,
-					inputValue: value,
-					mistakesMade: this.state.mistakesMade + 1,
-					mistake: true
-					})
-				}
+			if(!this.state.mistake){
+				this.setState({
+				...this.state,
+				inputValue: value,
+				mistakesMade: this.state.mistakesMade + 1,
+				mistake: true
+				})
+			}
 		}
-		console.log("--------")
-
 	}
 	
 	handleChange() {
 		if (!this.state.startDate) {
-			console.log('setting start date')
 			this.setState({
 				...this.state,
 				wordIndex: 0,
@@ -238,7 +198,7 @@ class Home extends Component {
 		return (
 			<div class={style.home}>
 				<h1>Klavio</h1>
-				<span>Mistakes made: {this.state.mistakesMade}</span>
+				<span class={style.mistakeCounter}>Mistakes made: {this.state.mistakesMade}</span>
 				<div class={style.unselectable}>
 					<div class={this.state.gameStarted ? style.textBox : style.textBoxHidden}>{
 						this.state.gameStarted?
@@ -258,7 +218,7 @@ class Home extends Component {
 				<div class={this.state.finished ? style.visible : style.hidden}>
 					{this.state.success ? (
 						<div>
-						<div>Percent of mistakes {this.inputText.length / this.state.mistakesMade}</div>
+						<div class={style.mistakeCounter}>Percent of mistakes: {(this.state.mistakesMade * 100 / this.inputText.length).toFixed(2)}%</div>
 						<div><h3>Legend!</h3>
 						<p>Words per minute <b>{this.state.wordsPerMin}</b></p>
 						<p>Symbols per minute <b>{this.state.symbolsPerMin}</b></p>
