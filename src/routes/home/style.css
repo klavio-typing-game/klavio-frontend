@@ -95,6 +95,18 @@ input {
     /* padding: 3vmin; */
 }
 
+.textBoxHidden {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #5a5454;
+    border-style: solid;
+    border-radius: 0.5pc;
+    margin-left: 25vmin;
+    margin-right: 25vmin;
+    padding: 5vmin;
+}
 .targetText {
 	text-align: left;
     /* margin-top: 40px; */

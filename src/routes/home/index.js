@@ -89,23 +89,46 @@ class Home extends Component {
 	}
 	
 	handleKeyUp(evt) {
-		console.log(evt.keyCode)
+		console.log("-------\nKey code:",evt.keyCode)
 		if(evt.keyCode == 17){
 			this.setState({
 				...this.state,
+				mistake: false,
 				charIndex: - 1,
 				inputValue: ""
 			})
 			return
 		}
 		const value = evt.target.value
-		if (!value.trim()) return
-		console.log(value)
-		this.setState({
-			...this.state,
-			charIndex:value.length - 1,
-			inputValue: value
-		})
+		const chI = value.length - 1
+		if (!value.trim()) {
+			this.setState({
+				...this.state,
+				mistake: false,
+				charIndex: - 1,
+				inputValue: ""
+			})
+			return
+		}
+		console.log("Got",value+"_")
+		console.log(this.state.wordIndex)
+		console.log(chI + 1)
+		console.log("Must be",this.state.words[this.state.wordIndex].substring(0, chI+1))
+		if (this.state.words[this.state.wordIndex].substring(0, chI+1) !== value) {
+			this.setState({
+				...this.state,
+				mistake: true,
+				charIndex: chI,
+				inputValue: value
+			})
+		}else {
+			this.setState({
+				...this.state,
+				mistake: false,
+				charIndex: chI,
+				inputValue: value
+			})
+		}
 		if (evt.keyCode == 32) {
 			// if (!value.trim()) return
 			if (value.trimRight() === this.state.words[this.state.wordIndex]) {
@@ -147,10 +170,6 @@ class Home extends Component {
 			}
 		}
 
-		// this.setState({
-		// 	...this.state,
-		// 	charIndex: value.length
-		// })
 	}
 	
 	handleChange() {
@@ -202,17 +221,20 @@ class Home extends Component {
 			<div class={style.home}>
 				<h1>Klavio</h1>
 				<span>Bro, you have attempts {this.state.maxAttempts - this.state.currentAttempt}</span>
-				<div class={style.textBox}>
 				<div class={style.unselectable}>
-				<p class={style.targetText}>{this.state.words.map((word, word_id) => (
-					<span key={word_id}  	class={word_id < this.state.wordIndex && this.state.wordIndex != -1 ? 
-					style.typed : word_id == this.state.wordIndex ? style.underline : null}       >{word.split('').map((ch, ch_id) => (
-						<span  key={ch_id} class={ch_id < this.state.charIndex && this.state.charIndex != -1 && this.state.wordIndex == word_id ?
-						style.current : ch_id == this.state.charIndex && this.state.wordIndex == word_id ? style.current : null}>{ch}</span>
-					))} </span> 
-				))}</p>
+					<div class={this.state.gameStarted ? style.textBox : style.textBoxHidden}>{
+						this.state.gameStarted?
+							<p class={style.targetText}>{this.state.words.map((word, word_id) => (
+								<span key={word_id} class={word_id < this.state.wordIndex && this.state.wordIndex != -1 ? 
+									style.typed : word_id == this.state.wordIndex ? style.underline : null} >{word.split('').map((ch, ch_id) => (
+									<span  key={ch_id} class={ch_id < this.state.charIndex && this.state.charIndex != -1 && this.state.wordIndex == word_id ?
+										style.current : ch_id == this.state.charIndex && this.state.wordIndex == word_id ? style.current : null}>{ch}</span>
+									))} </span> 
+							))}</p>
+						: <div>Text is hidden before game starts</div>
+					}</div>
 				</div>
-				</div>
+
 				{this.showInput(this.state.userCoundown)}
 
 				<div class={this.state.finished ? style.visible : style.hidden}>
