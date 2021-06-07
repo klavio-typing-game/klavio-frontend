@@ -114,7 +114,7 @@ class Home extends Component {
 		console.log(this.state.wordIndex)
 		console.log(chI + 1)
 		console.log("Must be",this.state.words[this.state.wordIndex].substring(0, chI+1))
-		if (this.state.words[this.state.wordIndex].substring(0, chI+1) !== value) {
+		if (this.state.words[this.state.wordIndex].substring(0, chI+1) !== value.trimRight()) {
 			this.setState({
 				...this.state,
 				mistake: true,
@@ -130,6 +130,7 @@ class Home extends Component {
 			})
 		}
 		if (evt.keyCode == 32) {
+			console.log("Check for 32 code",value+"_")
 			// if (!value.trim()) return
 			if (value.trimRight() === this.state.words[this.state.wordIndex]) {
 				const nextState = this.state.wordIndex + 1
@@ -144,6 +145,7 @@ class Home extends Component {
 						wordsPerMin: stats.wordsPerMin,
 						symbolsPerMin: stats.symbolsPerMin,
 						takenSeconds: stats.takenSeconds,
+						mistake: false
 					})
 				}
 				
@@ -169,6 +171,7 @@ class Home extends Component {
 				})
 			}
 		}
+		console.log("--------")
 
 	}
 	
